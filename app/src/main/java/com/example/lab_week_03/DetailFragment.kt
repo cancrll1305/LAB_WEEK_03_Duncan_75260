@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 
 private const val COFFEE_ID = "COFFEE_ID"
 
@@ -13,10 +15,6 @@ class DetailFragment : Fragment() {
 
     private var coffeeTitle: TextView? = null
     private var coffeeDesc: TextView? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,9 +34,16 @@ class DetailFragment : Fragment() {
         // Ambil coffeeId dari arguments
         val coffeeId = arguments?.getInt(COFFEE_ID, 0) ?: 0
         setCoffeeData(coffeeId)
+
+        // Tombol Back untuk kembali ke ListFragment
+        val backButton: Button = view.findViewById(R.id.btn_back)
+        backButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
-    fun setCoffeeData(id: Int) {
+    // Fungsi untuk menampilkan detail berdasarkan coffeeId
+    private fun setCoffeeData(id: Int) {
         when (id) {
             R.id.affogato -> {
                 coffeeTitle?.text = getString(R.string.affogato_title)
@@ -51,6 +56,14 @@ class DetailFragment : Fragment() {
             R.id.latte -> {
                 coffeeTitle?.text = getString(R.string.latte_title)
                 coffeeDesc?.text = getString(R.string.latte_desc)
+            }
+            R.id.cappuccino -> {
+                coffeeTitle?.text = getString(R.string.cappuccino_title)
+                coffeeDesc?.text = getString(R.string.cappuccino_desc)
+            }
+            R.id.mocha -> {
+                coffeeTitle?.text = getString(R.string.mocha_title)
+                coffeeDesc?.text = getString(R.string.mocha_desc)
             }
         }
     }
